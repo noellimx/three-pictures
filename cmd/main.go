@@ -7,6 +7,7 @@ import (
 	"strings"
 	"sync"
 	"sync/atomic"
+
 	"three-pictures/src"
 )
 
@@ -22,6 +23,7 @@ type Stats struct {
 	HalfPayOn          src.RANK `json:"half_pay_on"`
 }
 
+// StatsList not concurrent-safe
 var StatsList []Stats
 
 func main() {
@@ -40,6 +42,7 @@ func main() {
 
 	wg.Wait()
 
+	// csv <- StatsList result
 	csvData := strings.Builder{}
 	csvData.WriteString("dealer_pct_change")
 	csvData.WriteString(",average_player_pct_change")
@@ -135,7 +138,6 @@ func simulate(playersCount int, halfPayOn src.RANK, roundsToPlay int64) {
 			winner, _ := src.CheckUpperHand(&dealer.Hand, &seat.Hand)
 			if winner == nil {
 				draws.Add(1)
-				//log.Printf("dealer %#v seat %#v DRAW \n", src.Points(dealer), src.Points(seat))
 			} else {
 				var from, to *src.Player
 				var bet int64

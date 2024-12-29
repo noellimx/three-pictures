@@ -1,34 +1,5 @@
 package src
 
-func IsTriplePicture(hand CardGetter) bool {
-	for _, c := range hand.GetCards(3) {
-		if !c.Picture {
-			return false
-		}
-	}
-	return true
-}
-
-func isDoublePicture(hand CardGetter) bool {
-	t := 0
-	for _, c := range hand.GetCards(3) {
-		if c.Picture {
-			t += 1
-		}
-	}
-	return t == 2
-}
-
-func isSinglePicture(hand CardGetter) bool {
-	t := 0
-	for _, c := range hand.GetCards(3) {
-		if c.Picture {
-			t += 1
-		}
-	}
-	return t == 1
-}
-
 type RANK = int64
 
 const RANK_0 RANK = 0
@@ -96,4 +67,33 @@ func CheckUpperHand(hand1 *Hand, hand2 *Hand) (winner *Hand, loser *Hand) {
 	}
 
 	return nil, nil
+}
+
+func IsTriplePicture(hand CardGetter) bool {
+	for _, c := range hand.GetCards(3) {
+		if !c.Picture {
+			return false
+		}
+	}
+	return true
+}
+
+func isDoublePicture(hand CardGetter) bool {
+	t := 0
+	for _, c := range hand.GetCards(3) {
+		if c.Picture {
+			t += 1
+		}
+	}
+	return t == 2
+}
+
+func isSinglePicture(hand CardGetter) bool {
+	t := 0
+	for _, c := range hand.GetCards(3) {
+		if c.Picture {
+			t += 1
+		}
+	}
+	return t == 1
 }

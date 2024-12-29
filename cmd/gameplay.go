@@ -2,20 +2,15 @@ package main
 
 import (
 	"math/rand/v2"
-	
+
 	"three-pictures/src"
 )
 
 // ResetTable discards all cards
 func ResetTable(dealer src.Hander, players []*src.Player) {
-	var hands []src.Hander
-	hands = append(hands, dealer)
-	for _, player := range players {
-		hands = append(hands, player)
-	}
-
-	for _, h := range hands {
-		h.Discard()
+	dealer.Discard()
+	for _, p := range players {
+		p.Discard()
 	}
 }
 

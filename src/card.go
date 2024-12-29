@@ -7,34 +7,24 @@ import (
 	"strings"
 )
 
+type Hander interface {
+	Take(cards ...*Card)
+	Discard()
+	Shower
+	CardGetter
+}
+
+type CardGetter interface {
+	GetCards(n int64) []*Card
+}
+
+type Shower interface {
+	ShowCards(n int64)
+}
+
 type Card struct {
 	FaceValue int64
 	Picture   bool
-}
-
-type Player struct {
-	Hand
-	Bet   int64
-	Money int64
-	Buyin int64
-	Id    int
-}
-
-func (p *Player) PercentBuyInChange() float64 {
-	return (float64(p.Money-p.Buyin) / float64(p.Buyin)) * 100
-}
-
-func (p *Player) Buy(money int64) {
-	p.Money += money
-	p.Buyin += money
-}
-
-func (p *Player) Receive(money int64) {
-	p.Money += money
-}
-
-func (p *Player) Give(money int64) {
-	p.Receive(-money)
 }
 
 type Hand struct {
@@ -58,21 +48,6 @@ func (d *Hand) ShowCards(n int64) {
 
 func (d *Hand) GetCards(n int64) []*Card {
 	return d.Cards[0:n]
-}
-
-type Hander interface {
-	Take(cards ...*Card)
-	Discard()
-	Shower
-	CardGetter
-}
-
-type CardGetter interface {
-	GetCards(n int64) []*Card
-}
-
-type Shower interface {
-	ShowCards(n int64)
 }
 
 func (d *Hand) Take(cards ...*Card) {
